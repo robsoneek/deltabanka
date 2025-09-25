@@ -34,17 +34,10 @@ public class BaseBankAccount {
         return balance;
     }
 
-    public void addBalance(double balance) {
-        this.balance += balance;
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
 
-    public void withdraw(double balance) {
-        double subtract = this.balance - balance;
-        if (subtract > 0) {
-            throw new IllegalArgumentException("Insufficient funds.");
-        }
 
-        this.balance = subtract;
-    }
 
 }
