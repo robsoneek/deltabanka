@@ -18,6 +18,10 @@ public class BaseBankAccount {
         this.owner = owner;
         this.balance = balance;
     }
+
+    public BaseBankAccount() {
+    }
+
     public String getUuid() {
         return uuid;
     }

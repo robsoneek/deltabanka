@@ -6,9 +6,10 @@ import org.example.bankAccounts.services.BankAccountNumberGenerator;
 import org.example.bankAccounts.BaseBankAccount;
 import org.example.bankAccounts.StudentBankAccount;
 import org.example.people.BankAccountOwner;
-import org.example.people.BaseBankAccountOwner;
 import org.example.people.Customer;
 import org.example.people.factories.CustomersFactory;
+import org.example.serialization.BankAccountOwnerJsonSerializationServiceGson;
+import org.example.serialization.Serialization;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -18,7 +19,9 @@ public class Main {
         try{
             BankAccountNumberGenerator generator = new BankAccountNumberGenerator();
             BankAccountFundsService fundsService = new BankAccountFundsService();
+            Serialization jsonSerializationService = new BankAccountOwnerJsonSerializationServiceGson();
             CustomersFactory customersFactory = new CustomersFactory();
+            BankAccountOwner bankAccountOwner = new BankAccountOwner("0-123", "jouhnas", "tompest");
             Customer owner = customersFactory.customer("0-123", "jouhnas", "tompest");
             BankAccountFactory  accountFactory = new BankAccountFactory();
             BaseBankAccount studentAccount = accountFactory.createStudentBankAccount("A-123", generator.generateAccountNumber(), owner, 0, "Delta");
@@ -35,6 +38,7 @@ public class Main {
                 System.out.println("Balance: " + studentAccount.getBalance());
                 fundsService.withdraw(studentAccount, 2500);
                 System.out.println("Balance: " + studentAccount.getBalance());
+                System.out.print(jsonSerializationService.serialize(bankAccountOwner));
 
             }
 
