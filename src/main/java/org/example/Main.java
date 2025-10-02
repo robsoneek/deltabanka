@@ -31,9 +31,9 @@ public class Main {
                 System.out.println("Uuid: " + studentAccount.getUuid());
                 System.out.println("Account Number: " + studentAccount.getAccountNumber());
                 System.out.println("Balance: " + studentAccount.getBalance());
-                fundsService.deposit(studentAccount, 500);
+                fundsService.deposit(studentAccount, 15000);
                 System.out.println("Balance: " + studentAccount.getBalance());
-                fundsService.withdraw(studentAccount, 200);
+                fundsService.withdraw(studentAccount, 2500);
                 System.out.println("Balance: " + studentAccount.getBalance());
 
             }
