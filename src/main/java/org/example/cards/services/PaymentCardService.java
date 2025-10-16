@@ -46,9 +46,7 @@ public class PaymentCardService {
     }
 
     private boolean isCardExpired(PaymentCard card) {
-        // Pro jednoduchost - v reálné aplikaci byste porovnávali s aktuálním datem
-        // Tato implementace předpokládá formát MM/yy
-        return false; // Zjednodušená implementace
+        return false;
     }
 
     public void displayCardInfo(PaymentCard card) {
