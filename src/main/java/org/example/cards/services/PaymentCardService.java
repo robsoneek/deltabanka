@@ -5,6 +5,9 @@ import org.example.bankAccounts.BankAccountWithPaymentCards;
 import org.example.cards.PaymentCard;
 import org.example.bankAccounts.services.BankAccountFundsService;
 
+import java.time.DateTimeException;
+import java.time.YearMonth;
+
 
 public class PaymentCardService {
 
@@ -46,7 +49,18 @@ public class PaymentCardService {
     }
 
     private boolean isCardExpired(PaymentCard card) {
-        return false;
+        try {
+            int month = Integer.parseInt(card.getExpireMonth());
+            int year = Integer.parseInt(card.getExpireYear());
+            YearMonth expiryDate = YearMonth.of(year, month);
+            YearMonth currentDate = YearMonth.now();
+
+            return currentDate.isAfter(expiryDate);
+
+        } catch (NumberFormatException | DateTimeException e) {
+            return true;
+        }
+
     }
 
     public void displayCardInfo(PaymentCard card) {
