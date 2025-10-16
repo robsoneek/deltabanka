@@ -2,27 +2,27 @@ package org.example.serialization;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
-import org.example.people.BankAccountOwner;
-import org.example.people.serialization.BankAccountOwnerSerialization;
-import org.example.people.serialization.BankAccountOwnerSerializationFactory;
+import org.example.people.Customer;
+import org.example.people.serialization.CustomerSerialization;
+import org.example.people.serialization.CustomerSerializationFactory;
 
-import java.io.Serializable;
 
 public class BankAccountOwnerJsonSerializationServiceXML implements Serialization {
 
     private final XmlMapper xmlMapper = new XmlMapper();
-    BankAccountOwnerSerializationFactory bankAccountOwnerSerializationFactory = new  BankAccountOwnerSerializationFactory();
+    CustomerSerializationFactory customerSerializationFactory = new CustomerSerializationFactory();
 
     @Override
-    public String serialize(Object bankAccountOwner) {
-        if(!(bankAccountOwner instanceof BankAccountOwner)){
-            throw new IllegalArgumentException("BankAccountOwner must be of type BankAccountOwner");
+    public String serialize(Object customer) {
+        if(!(customer instanceof Customer)){
+            throw new IllegalArgumentException("Customer must be of type Customer");
         }
-        BankAccountOwnerSerialization bankAccountOwnerSerialization = bankAccountOwnerSerializationFactory.createBankAccountOwnerSerialization((BankAccountOwner) bankAccountOwner);
+        CustomerSerialization bankAccountOwnerSerialization =
+                customerSerializationFactory.createBankAccountOwnerSerialization((Customer) customer);
         try {
             return xmlMapper.writeValueAsString(bankAccountOwnerSerialization);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException("Failed to serialize BankAccountOwner to XML using Jackson", e);
+            throw new RuntimeException("Failed to serialize Customer to XML using Jackson", e);
         }
 
     }
@@ -30,9 +30,9 @@ public class BankAccountOwnerJsonSerializationServiceXML implements Serializatio
     @Override
     public Object deserialize(String serializedData) {
         try {
-            BankAccountOwnerSerialization serializationDto = xmlMapper.readValue(serializedData, BankAccountOwnerSerialization.class);
+            CustomerSerialization serializationDto = xmlMapper.readValue(serializedData, CustomerSerialization.class);
 
-            return new BankAccountOwner(
+            return new Customer(
                     serializationDto.uuid,
                     serializationDto.firstName,
                     serializationDto.lastName

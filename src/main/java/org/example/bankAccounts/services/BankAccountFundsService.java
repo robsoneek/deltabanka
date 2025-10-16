@@ -1,7 +1,7 @@
 package org.example.bankAccounts.services;
 
 import org.example.bankAccounts.BaseBankAccount;
-import org.example.people.BaseBankAccountOwner;
+
 import java.util.Scanner;
 
 public class BankAccountFundsService {

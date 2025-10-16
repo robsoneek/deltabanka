@@ -1,6 +1,6 @@
 package org.example.bankAccounts;
 
-import org.example.people.BaseBankAccountOwner;
+import org.example.people.Customer;
 
 public class BaseBankAccount {
 
@@ -8,14 +8,14 @@ public class BaseBankAccount {
 
     private String accountNumber;
 
-    private BaseBankAccountOwner owner;
+    private Customer customer;
 
     double balance;
 
-    public BaseBankAccount(String uuid, String accountNumber, BaseBankAccountOwner owner, double balance) {
+    public BaseBankAccount(String uuid, String accountNumber, Customer customer, double balance) {
         this.uuid = uuid;
         this.accountNumber = accountNumber;
-        this.owner = owner;
+        this.customer = customer;
         this.balance = balance;
     }
 
@@ -30,8 +30,8 @@ public class BaseBankAccount {
         return accountNumber;
     }
 
-    public BaseBankAccountOwner getOwner() {
-        return owner;
+    public Customer getCustomer() {
+        return customer;
     }
 
     public double getBalance() {

@@ -1,10 +1,10 @@
 package org.example.bankAccounts;
 
-import org.example.people.BaseBankAccountOwner;
+import org.example.people.Customer;
 
-public class BankAccount extends BaseBankAccount {
+public class BankAccount extends BankAccountWithPaymentCards {
 
-    public BankAccount(String uuid, String accountNumber, BaseBankAccountOwner owner, double balance) {
-        super(uuid,accountNumber,owner,balance);
+    public BankAccount(String uuid, String accountNumber, Customer customer) {
+        super(uuid,accountNumber, customer, 0);
     }
 }

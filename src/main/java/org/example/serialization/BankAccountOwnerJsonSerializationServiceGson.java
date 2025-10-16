@@ -1,29 +1,30 @@
 package org.example.serialization;
 
 import com.google.gson.Gson;
-import org.example.people.BankAccountOwner;
-import org.example.people.serialization.BankAccountOwnerSerialization;
-import org.example.people.serialization.BankAccountOwnerSerializationFactory;
+import org.example.people.Customer;
+import org.example.people.serialization.CustomerSerialization;
+import org.example.people.serialization.CustomerSerializationFactory;
 
 public class BankAccountOwnerJsonSerializationServiceGson implements Serialization {
 
-    BankAccountOwnerSerializationFactory bankAccountOwnerSerializationFactory = new BankAccountOwnerSerializationFactory();
+    CustomerSerializationFactory customerSerializationFactory = new CustomerSerializationFactory();
     Gson gson = new Gson();
 
     @Override
-    public String serialize(Object bankAccountOwner) {
-        if(!(bankAccountOwner instanceof BankAccountOwner)){
+    public String serialize(Object customer) {
+        if(!(customer instanceof Customer)){
             throw new IllegalArgumentException("BankAccountOwner must be of type BankAccountOwner");
         }
 
-        BankAccountOwnerSerialization bankAccountOwnerSerialization = bankAccountOwnerSerializationFactory.createBankAccountOwnerSerialization((BankAccountOwner) bankAccountOwner);
+        CustomerSerialization bankAccountOwnerSerialization =
+                customerSerializationFactory.createBankAccountOwnerSerialization((Customer)customer);
 
         return gson.toJson(bankAccountOwnerSerialization);
     }
 
     @Override
     public Object deserialize(String serializedData) {
-        return gson.fromJson("", BankAccountOwnerSerialization.class);
+        return gson.fromJson("", CustomerSerialization.class);
     }
 
 }

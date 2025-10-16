@@ -2,7 +2,7 @@ package org.example.people.serialization;
 
 import com.google.gson.annotations.SerializedName;
 
-public class BankAccountOwnerSerialization {
+public class CustomerSerialization {
 
     @SerializedName("id")
     public String uuid;
