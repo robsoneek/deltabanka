@@ -1,7 +1,7 @@
 package org.example.bankAccounts.services;
 
 import org.example.bankAccounts.BaseBankAccount;
-import org.example.logging.TransactionLogger;
+import org.example.logger.TransactionLogger;
 
 import java.util.Scanner;
 

@@ -1,4 +1,4 @@
-package org.example.logging;
+package org.example.logger;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -37,14 +37,6 @@ public class TransactionLogger {
         writeToLog(logMessage);
     }
 
-    public void logError(String operation, String accountNumber, String errorMessage) {
-        String logMessage = String.format("[%s] ERROR - Operation: %s, Account: %s, Error: %s",
-                getCurrentTimestamp(),
-                operation,
-                accountNumber,
-                errorMessage);
-        writeToLog(logMessage);
-    }
 
     private String getCurrentTimestamp() {
         return LocalDateTime.now().format(DATE_FORMATTER);

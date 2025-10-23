@@ -4,7 +4,7 @@ package org.example.cards.services;
 import org.example.bankAccounts.BankAccountWithPaymentCards;
 import org.example.cards.PaymentCard;
 import org.example.bankAccounts.services.BankAccountFundsService;
-import org.example.logging.TransactionLogger;
+import org.example.logger.TransactionLogger;
 
 import java.time.DateTimeException;
 import java.time.YearMonth;
