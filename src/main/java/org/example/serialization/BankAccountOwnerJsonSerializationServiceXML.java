@@ -2,6 +2,7 @@ package org.example.serialization;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import com.google.inject.Inject;
 import org.example.people.Customer;
 import org.example.people.serialization.CustomerSerialization;
 import org.example.people.serialization.CustomerSerializationFactory;
@@ -9,8 +10,10 @@ import org.example.people.serialization.CustomerSerializationFactory;
 
 public class BankAccountOwnerJsonSerializationServiceXML implements Serialization {
 
-    private final XmlMapper xmlMapper = new XmlMapper();
-    CustomerSerializationFactory customerSerializationFactory = new CustomerSerializationFactory();
+    @Inject
+    private XmlMapper xmlMapper;
+    @Inject
+    private CustomerSerializationFactory customerSerializationFactory;
 
     @Override
     public String serialize(Object customer) {

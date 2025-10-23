@@ -1,14 +1,18 @@
 package org.example.serialization;
 
 import com.google.gson.Gson;
+import com.google.inject.Inject;
 import org.example.people.Customer;
 import org.example.people.serialization.CustomerSerialization;
 import org.example.people.serialization.CustomerSerializationFactory;
 
-public class BankAccountOwnerJsonSerializationServiceGson implements Serialization {
+public class BankAccountOwnerJsonSerializationService implements Serialization {
 
-    CustomerSerializationFactory customerSerializationFactory = new CustomerSerializationFactory();
-    Gson gson = new Gson();
+    @Inject
+    private CustomerSerializationFactory customerSerializationFactory;
+    @Inject
+    private Gson gson;
+
 
     @Override
     public String serialize(Object customer) {

@@ -1,5 +1,6 @@
 package org.example.bankAccounts.factories;
 
+import com.google.inject.Inject;
 import org.example.bankAccounts.BankAccount;
 import org.example.bankAccounts.BankAccountWithPaymentCards;
 import org.example.bankAccounts.SavingBankAccount;
@@ -9,7 +10,8 @@ import org.example.people.Customer;
 
 public class BankAccountFactory {
 
-    private BankAccountNumberGenerator generator = new BankAccountNumberGenerator();
+    @Inject
+    private BankAccountNumberGenerator generator;
 
     public BankAccount createBankAccount(String uuid, Customer customer){
         return                            new BankAccount(

@@ -1,13 +1,19 @@
 package org.example.cards;
 
+import com.google.inject.Inject;
+
 import java.util.UUID;
 
 public class PaymentCardFactory {
 
-    private PaymentCardNumberGenerator paymentCardNumberGenerator = new PaymentCardNumberGenerator();
-    private PaymentCardCvvGenerator paymentCardCvvGenerator = new PaymentCardCvvGenerator();
-    private PaymentCardPinGenerator paymentCardPinGenerator = new PaymentCardPinGenerator();
-    private PaymentCardExpirationCalculator paymentCardExpirationCalculator = new PaymentCardExpirationCalculator();
+    @Inject
+    private PaymentCardNumberGenerator paymentCardNumberGenerator;
+    @Inject
+    private PaymentCardCvvGenerator paymentCardCvvGenerator;
+    @Inject
+    private PaymentCardPinGenerator paymentCardPinGenerator;
+    @Inject
+    private PaymentCardExpirationCalculator paymentCardExpirationCalculator;
 
     public PaymentCard create(){
         String uuid = UUID.randomUUID().toString();

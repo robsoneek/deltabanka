@@ -1,6 +1,7 @@
 package org.example.cards.services;
 
 
+import com.google.inject.Inject;
 import org.example.bankAccounts.BankAccountWithPaymentCards;
 import org.example.cards.PaymentCard;
 import org.example.bankAccounts.services.BankAccountFundsService;
@@ -12,8 +13,10 @@ import java.time.YearMonth;
 
 public class PaymentCardService {
 
-    BankAccountFundsService fundsService = new BankAccountFundsService();
-    TransactionLogger logger = new TransactionLogger();
+    @Inject
+    private BankAccountFundsService fundsService;
+    @Inject
+    private TransactionLogger logger;
 
     public boolean makePayment(PaymentCard card, BankAccountWithPaymentCards bankAccount, double amount, String pin) {
         if(!card.getPin().equals(pin))

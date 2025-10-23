@@ -16,6 +16,9 @@ dependencies {
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.dataformat/jackson-dataformat-xml
     implementation("com.fasterxml.jackson.dataformat:jackson-dataformat-xml:2.20.0")
 
+    // https://mvnrepository.com/artifact/com.google.inject/guice
+    implementation("com.google.inject:guice:7.0.0")
+
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")

@@ -1,5 +1,6 @@
 package org.example.bankAccounts.services;
 
+import com.google.inject.Inject;
 import org.example.bankAccounts.BaseBankAccount;
 import org.example.logger.TransactionLogger;
 
@@ -7,7 +8,9 @@ import java.util.Scanner;
 
 public class BankAccountFundsService {
 
-    private TransactionLogger logger = new TransactionLogger();
+    @Inject
+    private TransactionLogger logger;
+
 
     public void deposit(BaseBankAccount account, double amount) {
         if (amount > 10000){

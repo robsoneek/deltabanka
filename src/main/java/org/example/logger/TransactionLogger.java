@@ -63,4 +63,13 @@ public class TransactionLogger {
         }
         System.out.println("=== End of Log ===\n");
     }
+
+    public void clearLogs() {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(LOG_FILE, false))) {
+            writer.print("");
+            System.out.println("Transaction log cleared.");
+        } catch (IOException e) {
+            System.err.println("Failed to clear log file: " + e.getMessage());
+        }
+    }
 }

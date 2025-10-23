@@ -1,12 +1,14 @@
 package org.example.serialization;
 
+import com.google.inject.Inject;
 import org.example.people.Customer;
 import org.example.people.serialization.CustomerSerialization;
 import org.example.people.serialization.CustomerSerializationFactory;
 
 public class CustomerJsonSerializationServiceBuilder implements Serialization {
 
-    CustomerSerializationFactory customerSerializationFactory = new CustomerSerializationFactory();
+    @Inject
+    private CustomerSerializationFactory customerSerializationFactory;
 
 
     @Override
