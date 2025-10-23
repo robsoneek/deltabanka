@@ -13,7 +13,7 @@ import org.example.people.Customer;
 import org.example.people.factories.CustomersFactory;
 import org.example.serialization.BankAccountOwnerJsonSerializationServiceXML;
 import org.example.serialization.Serialization;
-import org.example.logging.TransactionLogger;
+import org.example.logger.TransactionLogger;
 
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
