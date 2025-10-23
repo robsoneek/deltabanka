@@ -4,6 +4,7 @@ package org.example.cards.services;
 import org.example.bankAccounts.BankAccountWithPaymentCards;
 import org.example.cards.PaymentCard;
 import org.example.bankAccounts.services.BankAccountFundsService;
+import org.example.logging.TransactionLogger;
 
 import java.time.DateTimeException;
 import java.time.YearMonth;
@@ -12,12 +13,14 @@ import java.time.YearMonth;
 public class PaymentCardService {
 
     BankAccountFundsService fundsService = new BankAccountFundsService();
+    TransactionLogger logger = new TransactionLogger();
 
     public boolean makePayment(PaymentCard card, BankAccountWithPaymentCards bankAccount, double amount, String pin) {
         if(!card.getPin().equals(pin))
             throw new IllegalArgumentException("Invalid card pin");
 
-        if(!bankAccount.paymentCardsMap.containsKey(card.getCardNumber())){
+        if(!bankAccount.getPaymentCards().stream()
+                .anyMatch(c -> c.getCardNumber().equals(card.getCardNumber()))){
             throw new IllegalArgumentException("Invalid card number");
         }
 
@@ -36,12 +39,14 @@ public class PaymentCardService {
                 card.getCardNumber().substring(card.getCardNumber().length() - 4)));
         System.out.println(String.format("Balance: %.2f Kč", bankAccount.getBalance()));
 
+        logger.logCardPayment(card.getCardNumber(), bankAccount.getAccountNumber(), amount);
+
         return true;
     }
 
     public PaymentCard getCardByNumber(BankAccountWithPaymentCards bankAccount, String cardNumber)
             throws IllegalAccessError {
-        PaymentCard card = bankAccount.paymentCardsMap.get(cardNumber);
+        PaymentCard card = bankAccount.getPaymentCards().get(Integer.parseInt(cardNumber));
         if (card == null) {
             throw new IllegalAccessError("Karta s tímto číslem nebyla nalezena");
         }
@@ -55,11 +60,14 @@ public class PaymentCardService {
             YearMonth expiryDate = YearMonth.of(year, month);
             YearMonth currentDate = YearMonth.now();
 
-            return currentDate.isAfter(expiryDate);
+            if(currentDate.isAfter(expiryDate)){
+                return true;
+            }
 
         } catch (NumberFormatException | DateTimeException e) {
             return true;
         }
+        return false;
 
     }
 
@@ -72,7 +80,7 @@ public class PaymentCardService {
 
     public double checkBalance(PaymentCard card, BankAccountWithPaymentCards bankAccount)
             throws IllegalAccessError {
-        if (!bankAccount.paymentCardsMap.containsKey(card.getCardNumber())) {
+        if (!bankAccount.getPaymentCards().contains(card.getCardNumber())) {
             throw new IllegalArgumentException("Card is not linked to this account");
         }
         return bankAccount.getBalance();

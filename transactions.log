@@ -1,0 +1,4 @@
+[2025-10-23 09:13:13] DEPOSIT - Account: 2166, Amount: 15000.00 Kč
+[2025-10-23 09:13:13] WITHDRAWAL - Account: 2166, Amount: 2500.00 Kč
+[2025-10-23 09:13:14] WITHDRAWAL - Account: 6266, Amount: 1500.00 Kč
+[2025-10-23 09:13:14] CARD_PAYMENT - Card: ****8060, Account: 6266, Amount: 1500.00 Kč

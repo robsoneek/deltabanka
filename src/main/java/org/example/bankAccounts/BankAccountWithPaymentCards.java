@@ -5,9 +5,7 @@ import org.example.people.Customer;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class BankAccountWithPaymentCards extends BaseBankAccount{
     private List<PaymentCard> paymentCards;
@@ -19,6 +17,7 @@ public class BankAccountWithPaymentCards extends BaseBankAccount{
     }
 
     public void addPaymentCard(PaymentCard paymentCard){
+        this.paymentCards.add(paymentCard);
         paymentCard.linkToBankAccount(this);
     }
 

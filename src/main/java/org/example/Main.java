@@ -13,6 +13,8 @@ import org.example.people.Customer;
 import org.example.people.factories.CustomersFactory;
 import org.example.serialization.BankAccountOwnerJsonSerializationServiceXML;
 import org.example.serialization.Serialization;
+import org.example.logging.TransactionLogger;
+
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -22,6 +24,7 @@ public class Main {
     public static void main(String[] args) {
 
         try{
+            TransactionLogger logger = new TransactionLogger();
             PaymentCardService paymentCardService = new PaymentCardService();
             BankAccountFactory bankAccountFactory = new BankAccountFactory();
             BankAccountNumberGenerator generator = new BankAccountNumberGenerator();
@@ -59,6 +62,9 @@ public class Main {
                 System.out.println();
                 System.out.println("Balance: " + bankAccount.getBalance());
                 System.out.print(serializationService.serialize(owner));
+
+                System.out.println("\n");
+                logger.displayAllLogs();
 
 
             }

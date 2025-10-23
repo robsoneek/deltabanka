@@ -1,10 +1,13 @@
 package org.example.bankAccounts.services;
 
 import org.example.bankAccounts.BaseBankAccount;
+import org.example.logging.TransactionLogger;
 
 import java.util.Scanner;
 
 public class BankAccountFundsService {
+
+    private TransactionLogger logger = new TransactionLogger();
 
     public void deposit(BaseBankAccount account, double amount) {
         if (amount > 10000){
@@ -12,8 +15,11 @@ public class BankAccountFundsService {
             System.out.println("Amount to be deposited is greater than 10000" +
                     "\nAre you sure you want to continue? (y/n)");
             String answer = input.nextLine();
-            if (answer.equalsIgnoreCase("y"))
-                account.setBalance(account.getBalance()+amount);
+            if (answer.equalsIgnoreCase("y")) {
+                account.setBalance(account.getBalance() + amount);
+                logger.logDeposit(account.getAccountNumber(), amount);
+            }
+
             else
                 amount=0;
 
@@ -28,5 +34,6 @@ public class BankAccountFundsService {
         }
 
         account.setBalance(subtract);
+        logger.logWithdrawal(account.getAccountNumber(), amount);
     }
 }
