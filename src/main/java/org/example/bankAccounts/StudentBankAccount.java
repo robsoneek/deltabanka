@@ -1,5 +1,6 @@
 package org.example.bankAccounts;
 
+import org.example.cards.PaymentCardRegistry;
 import org.example.people.Customer;
 
 public class StudentBankAccount extends BankAccountWithPaymentCards {

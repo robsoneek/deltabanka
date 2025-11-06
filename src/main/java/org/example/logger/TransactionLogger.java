@@ -37,6 +37,12 @@ public class TransactionLogger {
         writeToLog(logMessage);
     }
 
+    public void logInterestCalculation(String accountNumber, double interest, double newBalance) {
+        String log = String.format("[%s] INTEREST CALCULATION - Account: %s, Interest: %.2f Kč, New Balance: %.2f Kč",
+                getCurrentTimestamp(), accountNumber, interest, newBalance);
+        writeToLog(log);
+    }
+
 
     private String getCurrentTimestamp() {
         return LocalDateTime.now().format(DATE_FORMATTER);

@@ -11,7 +11,6 @@ public class BankAccountFundsService {
     @Inject
     private TransactionLogger logger;
 
-
     public void deposit(BaseBankAccount account, double amount) {
         if (amount > 10000){
             Scanner input = new Scanner(System.in);
@@ -21,13 +20,14 @@ public class BankAccountFundsService {
             if (answer.equalsIgnoreCase("y")) {
                 account.setBalance(account.getBalance() + amount);
                 logger.logDeposit(account.getAccountNumber(), amount);
+            } else {
+                System.out.println("Deposit cancelled.");
+                return;
             }
-
-            else
-                amount=0;
-
-        }else
-            account.setBalance(account.getBalance()+amount);
+        } else {
+            account.setBalance(account.getBalance() + amount);
+            logger.logDeposit(account.getAccountNumber(), amount);
+        }
     }
 
     public void withdraw(BaseBankAccount account, double amount) {

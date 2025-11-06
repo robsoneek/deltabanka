@@ -1,6 +1,5 @@
 package org.example.cards.services;
 
-
 import com.google.inject.Inject;
 import org.example.bankAccounts.BankAccountWithPaymentCards;
 import org.example.cards.PaymentCard;
@@ -9,7 +8,6 @@ import org.example.logger.TransactionLogger;
 
 import java.time.DateTimeException;
 import java.time.YearMonth;
-
 
 public class PaymentCardService {
 
@@ -35,9 +33,9 @@ public class PaymentCardService {
             throw new IllegalArgumentException("Invalid balance");
         }
 
-        fundsService.withdraw(bankAccount,amount);
+        fundsService.withdraw(bankAccount, amount);
 
-        System.out.println(String.format("Payment succesful: %.2f ", amount));
+        System.out.println(String.format("Payment successful: %.2f ", amount));
         System.out.println(String.format("Card Number: ****%s",
                 card.getCardNumber().substring(card.getCardNumber().length() - 4)));
         System.out.println(String.format("Balance: %.2f Kč", bankAccount.getBalance()));
@@ -45,15 +43,6 @@ public class PaymentCardService {
         logger.logCardPayment(card.getCardNumber(), bankAccount.getAccountNumber(), amount);
 
         return true;
-    }
-
-    public PaymentCard getCardByNumber(BankAccountWithPaymentCards bankAccount, String cardNumber)
-            throws IllegalAccessError {
-        PaymentCard card = bankAccount.getPaymentCards().get(Integer.parseInt(cardNumber));
-        if (card == null) {
-            throw new IllegalAccessError("Karta s tímto číslem nebyla nalezena");
-        }
-        return card;
     }
 
     private boolean isCardExpired(PaymentCard card) {
@@ -71,7 +60,6 @@ public class PaymentCardService {
             return true;
         }
         return false;
-
     }
 
     public void displayCardInfo(PaymentCard card) {
@@ -83,7 +71,8 @@ public class PaymentCardService {
 
     public double checkBalance(PaymentCard card, BankAccountWithPaymentCards bankAccount)
             throws IllegalAccessError {
-        if (!bankAccount.getPaymentCards().contains(card.getCardNumber())) {
+        if (!bankAccount.getPaymentCards().stream()
+                .anyMatch(c -> c.getCardNumber().equals(card.getCardNumber()))) {
             throw new IllegalArgumentException("Card is not linked to this account");
         }
         return bankAccount.getBalance();
