@@ -2,6 +2,7 @@ package org.example.bankAccounts.services;
 
 import com.google.inject.Inject;
 import org.example.bankAccounts.BaseBankAccount;
+import org.example.bankAccounts.transactions.TransactionType;
 import org.example.logger.TransactionLogger;
 import org.example.bankAccounts.transactions.Transaction;
 import org.example.bankAccounts.factories.TransactionFactory;
@@ -28,11 +29,13 @@ public class BankAccountFundsService {
             if (answer.equalsIgnoreCase("y")) {
                 account.setBalance(account.getBalance() + amount);
 
-                Transaction transaction = transactionFactory.createDeposit(
+                Transaction t = transactionFactory.createTransaction(
+                        null,
                         account.getAccountNumber(),
+                        TransactionType.DEPOSIT,
                         amount
                 );
-                transactionManager.addTransaction(transaction);
+                transactionManager.addTransaction(t);
 
                 logger.logDeposit(account.getAccountNumber(), amount);
             } else {
@@ -42,11 +45,13 @@ public class BankAccountFundsService {
         } else {
             account.setBalance(account.getBalance() + amount);
 
-            Transaction transaction = transactionFactory.createDeposit(
+            Transaction t = transactionFactory.createTransaction(
+                    null,
                     account.getAccountNumber(),
+                    TransactionType.DEPOSIT,
                     amount
             );
-            transactionManager.addTransaction(transaction);
+            transactionManager.addTransaction(t);
 
             logger.logDeposit(account.getAccountNumber(), amount);
         }
@@ -60,11 +65,13 @@ public class BankAccountFundsService {
 
         account.setBalance(subtract);
 
-        Transaction transaction = transactionFactory.createWithdrawal(
+        Transaction t = transactionFactory.createTransaction(
                 account.getAccountNumber(),
+                null,
+                TransactionType.WITHDRAWAL,
                 amount
         );
-        transactionManager.addTransaction(transaction);
+        transactionManager.addTransaction(t);
 
         logger.logWithdrawal(account.getAccountNumber(), amount);
     }

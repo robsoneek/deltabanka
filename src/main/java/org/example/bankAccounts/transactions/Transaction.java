@@ -1,33 +1,35 @@
-package org.example.bankAccounts.transactions;
+package org.example.bankAccounts.transactions; // Zkontroluj, že package sedí
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 public class Transaction {
 
-    private final String transactionId;
-    private final LocalDateTime transactionDate;
-    private final String recipientAccountNumber;
-    private final String senderAccountNumber;
-    private final TransactionType transactionType;
-    private final double amount;
-    private final String description;
+    private String transactionId;
+    private LocalDateTime transactionDate;
+    private String senderAccountNumber;
+    private String recipientAccountNumber;
+    private TransactionType transactionType;
+    private double amount;
+    private String description;
 
-    public Transaction(String transactionId,
-                       LocalDateTime transactionDate,
-                       String recipientAccountNumber,
-                       String senderAccountNumber,
-                       TransactionType transactionType,
-                       double amount,
-                       String description) {
+    public Transaction(String transactionId, LocalDateTime transactionDate,
+                       String senderAccountNumber, String recipientAccountNumber,
+                       TransactionType transactionType, double amount, String description) {
         this.transactionId = transactionId;
         this.transactionDate = transactionDate;
-        this.recipientAccountNumber = recipientAccountNumber;
         this.senderAccountNumber = senderAccountNumber;
+        this.recipientAccountNumber = recipientAccountNumber;
         this.transactionType = transactionType;
         this.amount = amount;
         this.description = description;
     }
+
+    public Transaction(String transactionId, LocalDateTime transactionDate,
+                       String senderAccountNumber, String recipientAccountNumber,
+                       TransactionType transactionType, double amount) {
+        this(transactionId, transactionDate, senderAccountNumber, recipientAccountNumber, transactionType, amount, "");
+    }
+
 
     public String getTransactionId() {
         return transactionId;
@@ -37,12 +39,12 @@ public class Transaction {
         return transactionDate;
     }
 
-    public String getRecipientAccountNumber() {
-        return recipientAccountNumber;
-    }
-
     public String getSenderAccountNumber() {
         return senderAccountNumber;
+    }
+
+    public String getRecipientAccountNumber() {
+        return recipientAccountNumber;
     }
 
     public TransactionType getTransactionType() {
@@ -55,15 +57,5 @@ public class Transaction {
 
     public String getDescription() {
         return description;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("[%s] %s: %.2f Kc, Ucet: %s, ID: %s",
-                transactionDate,
-                transactionType,
-                amount,
-                recipientAccountNumber != null ? recipientAccountNumber : senderAccountNumber,
-                transactionId);
     }
 }

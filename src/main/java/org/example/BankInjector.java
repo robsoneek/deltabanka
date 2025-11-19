@@ -6,10 +6,14 @@ import com.google.inject.AbstractModule;
 import com.google.inject.Singleton;
 import org.example.bankAccounts.BankAccountsRegistry;
 import org.example.bankAccounts.facades.InterestManagementFacade;
+import org.example.bankAccounts.facades.TransactionExportFacade;
 import org.example.bankAccounts.factories.BankAccountFactory;
+import org.example.bankAccounts.factories.TransactionFactory;
 import org.example.bankAccounts.services.BankAccountFundsService;
 import org.example.bankAccounts.services.BankAccountNumberGenerator;
 import org.example.bankAccounts.services.InterestCalculatorService;
+import org.example.bankAccounts.services.TransactionManager;
+import org.example.bankAccounts.transactions.cron.TransactionExportCronService;
 import org.example.cards.*;
 import org.example.cards.services.PaymentCardService;
 import org.example.cron.InterestCalculationCronService;
@@ -52,5 +56,10 @@ public class BankInjector extends AbstractModule {
 
         bind(Gson.class).toInstance(new Gson());
         bind(XmlMapper.class).toInstance(new XmlMapper());
+
+        bind(TransactionFactory.class);
+        bind(TransactionManager.class).in(Singleton.class);
+        bind(TransactionExportFacade.class);
+        bind(TransactionExportCronService.class).in(Singleton.class);
     }
 }

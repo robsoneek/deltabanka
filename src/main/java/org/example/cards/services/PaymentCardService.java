@@ -2,20 +2,17 @@ package org.example.cards.services;
 
 import com.google.inject.Inject;
 import org.example.bankAccounts.BankAccountWithPaymentCards;
+import org.example.cards.PaymentCard;
+import org.example.logger.TransactionLogger;
+import org.example.bankAccounts.transactions.Transaction;
 import org.example.bankAccounts.factories.TransactionFactory;
 import org.example.bankAccounts.services.TransactionManager;
-import org.example.bankAccounts.transactions.Transaction;
-import org.example.cards.PaymentCard;
-import org.example.bankAccounts.services.BankAccountFundsService;
-import org.example.logger.TransactionLogger;
+import org.example.bankAccounts.transactions.TransactionType;
 
 import java.time.DateTimeException;
 import java.time.YearMonth;
 
 public class PaymentCardService {
-
-    @Inject
-    private BankAccountFundsService fundsService;
 
     @Inject
     private TransactionLogger logger;
@@ -42,22 +39,23 @@ public class PaymentCardService {
         if (bankAccount.getBalance() < amount) {
             throw new IllegalArgumentException("Invalid balance");
         }
-
-        double oldBalance = bankAccount.getBalance();
-        bankAccount.setBalance(oldBalance - amount);
-        Transaction transaction = transactionFactory.createCardPayment(
-                card.getCardNumber(),
-                bankAccount.getAccountNumber(),
-                amount
-        );
-        transactionManager.addTransaction(transaction);
+        double newBalance = bankAccount.getBalance() - amount;
+        bankAccount.setBalance(newBalance);
 
         System.out.println(String.format("Payment successful: %.2f ", amount));
         System.out.println(String.format("Card Number: ****%s",
                 card.getCardNumber().substring(card.getCardNumber().length() - 4)));
-        System.out.println(String.format("Balance: %.2f Kc", bankAccount.getBalance()));
+        System.out.println(String.format("Balance: %.2f Kč", bankAccount.getBalance()));
 
         logger.logCardPayment(card.getCardNumber(), bankAccount.getAccountNumber(), amount);
+
+        Transaction t = transactionFactory.createTransaction(
+                bankAccount.getAccountNumber(),
+                "MERCHANT",
+                TransactionType.CARD_PAYMENT,
+                amount
+        );
+        transactionManager.addTransaction(t);
 
         return true;
     }
@@ -99,6 +97,6 @@ public class PaymentCardService {
             throws IllegalAccessError {
         displayCardInfo(card);
         double balance = checkBalance(card, bankAccount);
-        System.out.println(String.format("Balance: %.2f Kc", balance));
+        System.out.println(String.format("Balance: %.2f Kč", balance));
     }
 }

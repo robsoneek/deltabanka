@@ -9,68 +9,8 @@ import java.util.Date;
 import java.util.UUID;
 
 public class TransactionFactory {
-
-    public Transaction createDeposit(String accountNumber, double amount) {
-        return new Transaction(
-                generateTransactionId(),
-                LocalDateTime.now(),
-                accountNumber,
-                null,
-                TransactionType.DEPOSIT,
-                amount,
-                "Vklad na ucet"
-        );
-    }
-
-    public Transaction createWithdrawal(String accountNumber, double amount) {
-        return new Transaction(
-                generateTransactionId(),
-                LocalDateTime.now(),
-                null,
-                accountNumber,
-                TransactionType.WITHDRAWAL,
-                amount,
-                "Vyber z uctu"
-        );
-    }
-
-    public Transaction createCardPayment(String cardNumber, String accountNumber, double amount) {
-        return new Transaction(
-                generateTransactionId(),
-                LocalDateTime.now(),
-                null,
-                accountNumber,
-                TransactionType.CARD_PAYMENT,
-                amount,
-                "Platba kartou ****" + cardNumber.substring(cardNumber.length() - 4)
-        );
-    }
-
-    public Transaction createInterest(String accountNumber, double amount, float interestRate) {
-        return new Transaction(
-                generateTransactionId(),
-                LocalDateTime.now(),
-                accountNumber,
-                null,
-                TransactionType.INTEREST,
-                amount,
-                String.format("Uroceni %.2f%%", interestRate)
-        );
-    }
-
-    public Transaction createTransfer(String senderAccount, String recipientAccount, double amount) {
-        return new Transaction(
-                generateTransactionId(),
-                LocalDateTime.now(),
-                recipientAccount,
-                senderAccount,
-                TransactionType.TRANSFER,
-                amount,
-                "Prevod mezi ucty"
-        );
-    }
-
-    private String generateTransactionId() {
-        return "TXN-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
+    public Transaction createTransaction(String source, String target, TransactionType type, double amount) {
+        String id = UUID.randomUUID().toString();
+        return new Transaction(id, LocalDateTime.now(), source, target, type, amount);
     }
 }

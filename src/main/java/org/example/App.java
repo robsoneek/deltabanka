@@ -48,7 +48,7 @@ public class App {
     private InterestCalculationCronService cronService;
 
     @Inject
-    private TransactionExportCronService  transactionExportCronService;
+    private TransactionExportCronService  exportCronService;
 
     public void run() {
         try {
@@ -107,17 +107,7 @@ public class App {
             System.out.println("\n=== Provedeni platby kartou ===");
             paymentCardService.makePayment(card, bankAccountWithCard, 1500.0, card.getPin());
 
-            System.out.println("\n=== Statistiky uroceni (pred cronem) ===");
-            System.out.println(interestManagementFacade.getInterestStatistics());
-
-            System.out.println("\n");
-            cronService.start();
-
-            System.out.println("Cron service bezi... (3 minuty)");
-
-            Thread.sleep(3 * 60 * 1000); // 3 minuty
-
-            cronService.stop();
+            runCronOnly();
 
             System.out.println("\n=== FINALNI STAV UCTU ===");
             System.out.println("Bezny ucet: " + bankAccount.getBalance() + " Kc");
@@ -137,21 +127,25 @@ public class App {
 
     public void runCronOnly() {
         try {
-            System.out.println("========================================");
-            System.out.println("   BANKING SYSTEM - CRON SERVICE MODE    ");
-            System.out.println("========================================");
+            System.out.println("CRON SERVICE MODE");
             System.out.println();
 
-            cronService.start();
+            //cronService.start();
+            exportCronService.start();
+            System.out.println("OK Pro ukončení napiš 'exit' a stiskni ENTER.");
+            System.out.println("----------------------------------------");
 
-            System.out.println("OK Cron service aktivni");
-            System.out.println("OK Automaticke uroceni kazdou minutu");
-            System.out.println("OK Stisknete Ctrl+C pro ukonceni");
-            System.out.println();
+            java.util.Scanner scanner = new java.util.Scanner(System.in);
 
-            while (cronService.isRunning()) {
-                Thread.sleep(1000);
+            while (true) {
+                String command = scanner.nextLine();
+
+                if ("exit".equalsIgnoreCase(command.trim())) {
+                    break;
+                } else {
+                }
             }
+            cronService.stop();
 
         } catch (Exception e) {
             System.err.println("CHYBA: " + e.getMessage());
