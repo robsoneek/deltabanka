@@ -18,7 +18,6 @@ public class InterestCalculatorService {
 
         return interest;
     }
-
     public void applyInterest(SavingBankAccount account, double interest) {
         if (interest <= 0) {
             logger.logInterestCalculation(

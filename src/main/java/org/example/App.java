@@ -8,6 +8,7 @@ import org.example.bankAccounts.StudentBankAccount;
 import org.example.bankAccounts.facades.InterestManagementFacade;
 import org.example.bankAccounts.factories.BankAccountFactory;
 import org.example.bankAccounts.services.BankAccountFundsService;
+import org.example.bankAccounts.transactions.cron.TransactionExportCronService;
 import org.example.cards.PaymentCard;
 import org.example.cards.PaymentCardFactory;
 import org.example.cards.services.PaymentCardService;
@@ -46,14 +47,12 @@ public class App {
     @Inject
     private InterestCalculationCronService cronService;
 
+    @Inject
+    private TransactionExportCronService  transactionExportCronService;
+
     public void run() {
         try {
             transactionLogger.clearLogs();
-
-            System.out.println("========================================");
-            System.out.println("    BANKING SYSTEM WITH CRON SERVICE       ");
-            System.out.println("========================================");
-            System.out.println();
 
             Customer owner = customersFactory.customer("0-123", "Jouhnas", "Tompest");
             BaseBankAccount bankAccount = bankAccountFactory.createBankAccount("123", owner);

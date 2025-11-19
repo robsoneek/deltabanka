@@ -2,6 +2,9 @@ package org.example.cards.services;
 
 import com.google.inject.Inject;
 import org.example.bankAccounts.BankAccountWithPaymentCards;
+import org.example.bankAccounts.factories.TransactionFactory;
+import org.example.bankAccounts.services.TransactionManager;
+import org.example.bankAccounts.transactions.Transaction;
 import org.example.cards.PaymentCard;
 import org.example.bankAccounts.services.BankAccountFundsService;
 import org.example.logger.TransactionLogger;
@@ -13,8 +16,15 @@ public class PaymentCardService {
 
     @Inject
     private BankAccountFundsService fundsService;
+
     @Inject
     private TransactionLogger logger;
+
+    @Inject
+    private TransactionFactory transactionFactory;
+
+    @Inject
+    private TransactionManager transactionManager;
 
     public boolean makePayment(PaymentCard card, BankAccountWithPaymentCards bankAccount, double amount, String pin) {
         if(!card.getPin().equals(pin))
@@ -33,12 +43,19 @@ public class PaymentCardService {
             throw new IllegalArgumentException("Invalid balance");
         }
 
-        fundsService.withdraw(bankAccount, amount);
+        double oldBalance = bankAccount.getBalance();
+        bankAccount.setBalance(oldBalance - amount);
+        Transaction transaction = transactionFactory.createCardPayment(
+                card.getCardNumber(),
+                bankAccount.getAccountNumber(),
+                amount
+        );
+        transactionManager.addTransaction(transaction);
 
         System.out.println(String.format("Payment successful: %.2f ", amount));
         System.out.println(String.format("Card Number: ****%s",
                 card.getCardNumber().substring(card.getCardNumber().length() - 4)));
-        System.out.println(String.format("Balance: %.2f Kč", bankAccount.getBalance()));
+        System.out.println(String.format("Balance: %.2f Kc", bankAccount.getBalance()));
 
         logger.logCardPayment(card.getCardNumber(), bankAccount.getAccountNumber(), amount);
 
@@ -82,6 +99,6 @@ public class PaymentCardService {
             throws IllegalAccessError {
         displayCardInfo(card);
         double balance = checkBalance(card, bankAccount);
-        System.out.println(String.format("Balance: %.2f Kč", balance));
+        System.out.println(String.format("Balance: %.2f Kc", balance));
     }
 }

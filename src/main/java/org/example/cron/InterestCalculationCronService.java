@@ -21,7 +21,6 @@ public class InterestCalculationCronService {
 
     public void start() {
         if (isRunning) {
-            System.out.println("Cron service již běží!");
             return;
         }
 
@@ -41,9 +40,6 @@ public class InterestCalculationCronService {
 
         timer.scheduleAtFixedRate(task, delay, period);
 
-        System.out.println("========================================");
-        System.out.println("  Interest Calculation Cron Service STARTED");
-        System.out.println("========================================");
         System.out.println("Interval: kazdou minutu (60s)");
         System.out.println("Cas spusteni: " + LocalDateTime.now().format(TIME_FORMATTER));
         System.out.println();
@@ -75,11 +71,7 @@ public class InterestCalculationCronService {
 
     private void executeInterestCalculation() {
         executionCount++;
-
-        System.out.println("------------------------------------------------");
         System.out.println("  CRON: Spusteni #" + executionCount);
-        System.out.println("  Cas: " + LocalDateTime.now().format(TIME_FORMATTER));
-        System.out.println("------------------------------------------------");
 
         try {
             int processedAccounts = interestManagementFacade.processAllSavingAccountsInterest();
@@ -91,7 +83,7 @@ public class InterestCalculationCronService {
             }
 
         } catch (Exception e) {
-            System.err.println("ERROR pri vypoctu uroku: " + e.getMessage());
+            System.err.println("Chyba pri vypoctu uroku: " + e.getMessage());
             e.printStackTrace();
         }
 
