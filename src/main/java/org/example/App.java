@@ -132,7 +132,7 @@ public class App {
 
             //cronService.start();
             exportCronService.start();
-            System.out.println("OK Pro ukončení napiš 'exit' a stiskni ENTER.");
+            System.out.println("OK Pro ukončení napiš 'exit'");
             System.out.println("----------------------------------------");
 
             java.util.Scanner scanner = new java.util.Scanner(System.in);

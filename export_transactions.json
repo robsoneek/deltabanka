@@ -1,0 +1,43 @@
+[
+  {
+    "transactionId": "5f06d2c5-a6cc-4be1-91ae-7010501d3f80",
+    "transactionDate": "2025-11-19T20:56:52.838014400",
+    "recipientAccountNumber": "2486",
+    "transactionType": "DEPOSIT",
+    "amount": 15000.0,
+    "description": ""
+  },
+  {
+    "transactionId": "b4592d27-db7c-4438-9f91-44f9805faa17",
+    "transactionDate": "2025-11-19T20:56:52.839031600",
+    "recipientAccountNumber": "1281",
+    "transactionType": "DEPOSIT",
+    "amount": 10000.0,
+    "description": ""
+  },
+  {
+    "transactionId": "4eae7d6b-038a-4335-a89f-fe27fe6fd32e",
+    "transactionDate": "2025-11-19T20:56:54.064252",
+    "recipientAccountNumber": "1309",
+    "transactionType": "DEPOSIT",
+    "amount": 50000.0,
+    "description": ""
+  },
+  {
+    "transactionId": "74da1a17-8800-499e-af93-93e772d1e078",
+    "transactionDate": "2025-11-19T20:56:54.906119600",
+    "recipientAccountNumber": "6278",
+    "transactionType": "DEPOSIT",
+    "amount": 25000.0,
+    "description": ""
+  },
+  {
+    "transactionId": "6b32ca50-2eda-467e-bce3-3556fc6db5e3",
+    "transactionDate": "2025-11-19T20:56:54.913119200",
+    "senderAccountNumber": "7379",
+    "recipientAccountNumber": "MERCHANT",
+    "transactionType": "CARD_PAYMENT",
+    "amount": 1500.0,
+    "description": ""
+  }
+]

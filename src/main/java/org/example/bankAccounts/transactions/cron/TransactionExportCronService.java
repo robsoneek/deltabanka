@@ -20,7 +20,6 @@ public class TransactionExportCronService {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                System.out.println("--- CRON EXPORT SPUŠTĚN ---");
                 facade.exportTransactions();
             }
         };

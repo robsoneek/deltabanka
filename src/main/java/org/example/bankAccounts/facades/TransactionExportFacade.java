@@ -24,7 +24,7 @@ public class TransactionExportFacade {
     @Inject
     private Gson gson;
 
-    public void exportTransactions() {
+    public String exportTransactions() {
 
         List<Transaction> allTransactions = transactionManager.getAllTransactions();
         String filename = "export_transactions.json";
@@ -35,15 +35,30 @@ public class TransactionExportFacade {
 
         if (filtered.isEmpty()) {
             System.out.println("Žádné transakce k exportu.");
-            return;
+            return null;
         }
+
+        Gson customGson = new GsonBuilder()
+                .setPrettyPrinting()
+                .registerTypeAdapter(LocalDateTime.class, new JsonSerializer<LocalDateTime>() {
+                    @Override
+                    public JsonPrimitive serialize(LocalDateTime src, Type typeOfSrc, JsonSerializationContext context) {
+                        return new JsonPrimitive(src.toString());
+                    }
+                })
+                .create();
+
         try (FileWriter writer = new FileWriter(filename)) {
-            String json = gson.toJson(filtered);
+            String json = customGson.toJson(filtered);
             writer.write(json);
             System.out.println("Exportováno " + filtered.size() + " transakcí do souboru " + filename);
+
+            return filename;
+
         } catch (IOException e) {
             System.err.println("Chyba při zápisu exportu: " + e.getMessage());
             e.printStackTrace();
+            return null;
         }
     }
 }
